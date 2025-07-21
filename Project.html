@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Auth System</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="styles.css">
+    <!-- New: Preload animations -->
+    <link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="styles.css"></noscript>
+</head>
+<body class="light-mode" style="opacity:0;"> <!-- Added initial opacity for fade-in -->
+    <!-- Dark Mode Toggle with animation classes -->
+    <button id="darkModeToggle" class="icon-btn" aria-label="Toggle dark mode">🌙</button>
+    
+    <!-- Notification System -->
+    <div class="notification" id="notification" aria-live="polite"></div>
+
+    <div class="container">
+        <!-- Login Form -->
+        <div class="auth-form" id="login-form">
+            <h2 data-animate="fade-up" data-delay="0.1s">Welcome Back!</h2>
+            <div class="form-group" data-animate="fade-up" data-delay="0.2s">
+                <input type="email" id="login-email" placeholder=" " required aria-label="Email">
+                <label>Email</label>
+                <span class="focus-border"></span>
+            </div>
+            <div class="form-group" data-animate="fade-up" data-delay="0.3s">
+                <input type="password" id="login-password" placeholder=" " required aria-label="Password">
+                <label>Password</label>
+                <span class="focus-border"></span>
+                <span class="toggle-password" onclick="togglePassword('login-password')" aria-label="Show password">👁️</span>
+            </div>
+            <button class="auth-btn ripple-btn" onclick="login()" data-animate="fade-up" data-delay="0.4s">Login</button>
+            <p class="auth-toggle" data-animate="fade-up" data-delay="0.5s">Don't have an account? <a href="#" onclick="showRegister()">Register</a></p>
+            <p id="login-error" class="error-message"></p>
+        </div>
+
+        <!-- Registration Form -->
+        <div class="auth-form hidden" id="register-form">
+            <h2 data-animate="fade-up" data-delay="0.1s">Create Account</h2>
+            <div class="form-group" data-animate="fade-up" data-delay="0.2s">
+                <input type="text" id="register-name" placeholder=" " required aria-label="Full Name">
+                <label>Full Name</label>
+                <span class="focus-border"></span>
+            </div>
+            <div class="form-group" data-animate="fade-up" data-delay="0.3s">
+                <input type="email" id="register-email" placeholder=" " required aria-label="Email">
+                <label>Email</label>
+                <span class="focus-border"></span>
+            </div>
+            <div class="form-group" data-animate="fade-up" data-delay="0.4s">
+                <input type="password" id="register-password" placeholder=" " required 
+                       onkeyup="checkPasswordStrength(this.value)" aria-label="Password">
+                <label>Password</label>
+                <span class="focus-border"></span>
+                <span class="toggle-password" onclick="togglePassword('register-password')" aria-label="Show password">👁️</span>
+                <div class="password-strength-meter">
+                    <div id="strength-bar"></div>
+                </div>
+                <small id="strength-text">Password Strength</small>
+            </div>
+            <div class="form-group" data-animate="fade-up" data-delay="0.5s">
+                <input type="password" id="confirm-password" placeholder=" " required aria-label="Confirm Password">
+                <label>Confirm Password</label>
+                <span class="focus-border"></span>
+            </div>
+            <button class="auth-btn ripple-btn" onclick="register()" data-animate="fade-up" data-delay="0.6s">Register</button>
+            <p class="auth-toggle" data-animate="fade-up" data-delay="0.7s">Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
+            <p id="register-error" class="error-message"></p>
+        </div>
+
+        <!-- Dashboard -->
+        <div class="dashboard hidden" id="dashboard">
+            <h2 data-animate="fade-up">Welcome, <span id="dashboard-username"></span>!</h2>
+            <div class="user-card" data-animate="fade-up" data-delay="0.2s">
+                <div class="avatar" id="user-avatar"></div>
+                <div class="user-info">
+                    <p><strong>Email:</strong> <span id="dashboard-email"></span></p>
+                    <p><strong>Member since:</strong> <span id="join-date"></span></p>
+                </div>
+            </div>
+            <button class="auth-btn logout-btn ripple-btn" onclick="logout()" data-animate="fade-up" data-delay="0.4s">Logout</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <!-- New: Animation observer polyfill for older browsers -->
+    <script src="https://unpkg.com/intersection-observer@0.12.0/intersection-observer.js"></script>
+</body>
+</html>
